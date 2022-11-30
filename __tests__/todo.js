@@ -82,7 +82,7 @@ describe("Todo test suite", () => {
     const DeletedResponse = JSON.parse(
       DeleteResponse.text
     );
-    expect(DeletedResponse).toBe(1);
+    expect(DeletedResponse).toBe(true);
 });
 
 });
