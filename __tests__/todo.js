@@ -66,27 +66,23 @@ describe("Todo test suite", () => {
     expect(parsedResponse[3]["title"]).toBe("Buy ps3");
   });
 
-    test("Deletes a todo with the given ID if it exists and sends a boolean response", async () => {
-      const response = await agent.post("/todos").send({
-        title: "Prepare Poster",
-        dueDate: new Date().toISOString(),
-        completed: false,
-      });
-      const parsedResponse = JSON.parse(response.text);
-      const todoID = parsedResponse.id;
-      expect(parsedResponse.title).toBe("Prepare Poster");
+  test("Deletes a todo with the given ID if it exists and sends a boolean response", async () => {
+    const response = await agent.post("/todos").send({
+      title: "Prepare Poster",
+      dueDate: new Date().toISOString(),
+      completed: false,
+    });
+    const parsedResponse = JSON.parse(response.text);
+    const todoID = parsedResponse.id;
+    expect(parsedResponse.title).toBe("Prepare Poster");
 
-    const successfulDeleteResponse = await agent
+    const DeleteResponse = await agent
       .delete(`/todos/${todoID}`)
       .send();
-    const parsedSuccessfulDeleteResponse = JSON.parse(successfulDeleteResponse.text);
-    expect(parsedSuccessfulDeleteResponse).toBe(1);
-    const UnsuccessfulDeleteResponse = await agent
-    .delete(`/todos/${0}`)
-    .send();
-    const parsedUnsuccessfulDeleteResponse = JSON.parse(UnsuccessfulDeleteResponse.text);
-    expect(parsedUnsuccessfulDeleteResponse).toBe(0);
+    const DeletedResponse = JSON.parse(
+      DeleteResponse.text
+    );
+    expect(DeletedResponse).toBe(1);
+});
 
-      
-    });
 });
