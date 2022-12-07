@@ -14,10 +14,7 @@
     "dialect": "postgres"
   },
   "production": {
-    "username": "postgres",
-    "password": "ADBDCD",
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "use-env-variable":"DATABASE_URL",
     "dialect": "postgres"
   }
 }
