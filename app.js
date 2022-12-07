@@ -7,8 +7,14 @@ app.use(bodyParser.json());
 
 app.set("view engine","ejs")
 
-app.get("/",(request,response) => {
-  response.render("index");
+app.get("/",async (request,response) => {
+  const allTodos = await Todo.getTodo();
+  if (request.accepts("html")){
+    response.render("index",{allTodos});
+  }
+  else{
+    response.json({allTodos})
+  }
 })
 
 
