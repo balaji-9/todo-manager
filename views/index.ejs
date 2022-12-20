@@ -1,15 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
+
 <body>
-    <%- include('header.ejs') %>
-    <%- include('todo.ejs') %>
-    <%- include('footer.ejs') %>
+  <div class="grid grid-cols-6">
+    <div class="col-start-3 col-span-2">
+      <%- include('header.ejs') %>
+        <form action="">
+          <div class="flex gap-2 py-4">
+            <div class="flex-auto">
+              <input type="text" placeholder="What's Next?"
+                class="border border-gray-300 text-gray-900 rounded text-sm w-full p-2" required />
+            </div>
+            <div class="flex-auto">
+              <input type="date" class="border border-gray-300 text-gray-900 rounded text-sm w-full leading-4 p-2" />
+            </div>
+            <div class="flex-none">
+              <button type="submit" class="bg-green-600 rounded p-2 text-white font-bold py-1.5 mr-2 mb-2 px-4">
+                Add
+              </button>
+            </div>
+          </div>
+        </form>
+        <div>
+          <%- include('todo.ejs') %>
+        </div>
+        
+  <%- include('footer.ejs') %>
+    </div>
+  </div>
+
+ 
 </body>
+
 </html>

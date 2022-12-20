@@ -2,23 +2,21 @@ const express = require("express");
 const app = express();
 const { Todo } = require("./models");
 const bodyParser = require("body-parser");
-const path = require("path")
+const path = require("path");
 app.use(bodyParser.json());
 
-app.set("view engine","ejs")
+app.set("view engine", "ejs");
 
-app.get("/",async (request,response) => {
+app.get("/", async (request, response) => {
   const allTodos = await Todo.getTodo();
-  if (request.accepts("html")){
-    response.render("index",{allTodos});
+  if (request.accepts("html")) {
+    response.render("index", { allTodos });
+  } else {
+    response.json({ allTodos });
   }
-  else{
-    response.json({allTodos})
-  }
-})
+});
 
-
-app.use(express.static(path.join(__dirname,'public')))
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/todos", async (request, response) => {
   const todoItems = await Todo.getTodo();
@@ -54,7 +52,7 @@ app.delete("/todos/:id", async (request, response) => {
   console.log("Delete a todo by ID:", request.params.id);
   try {
     const deletedTodo = await Todo.deleteTodo(request.params.id);
-    return response.send(deletedTodo? true : false);
+    return response.send(deletedTodo ? true : false);
   } catch (error) {
     console.error(error);
     return response.status(422).json(error);
