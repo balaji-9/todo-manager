@@ -23,6 +23,31 @@ module.exports = (sequelize, DataTypes) => {
       return this.findAll();
     }
 
+    static overdue() {
+      return this.findAll({
+        where: {
+          dueDate: { [Op.lt]: new Date().toLocaleDateString("en-CA") },
+          completed: false,
+        },
+      });
+    }
+    static dueToday() {
+      return this.findAll({
+        where: {
+          dueDate: { [Op.eq]: new Date().toLocaleDateString("en-CA") },
+          completed: false,
+        },
+      });
+    }
+    static dueLater() {
+      return this.findAll({
+        where: {
+          dueDate: { [Op.gt]: new Date().toLocaleDateString("en-CA") },
+          completed: false,
+        },
+      });
+    }
+
     static deleteTodo(id) {
       return this.destroy({
         where: { id: id },

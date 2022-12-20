@@ -1,8 +1,8 @@
 
 <div>
-    <h5>Overdue</h5> <span id="Overdue"
+    <h5>Overdue <span
     class="bg-gray-100 text-gray-800 text-sm font-small mr-2 px-2.5 py-0.5 rounded dark:bg-gray-200 dark:text-gray-900 justify-center items-center items inline-block">1
-</span>
+</span> </h5>
     <ul class="list-none">
         <% for( var i=0;i< allTodos.length;i++){%>
            <% if(allTodos[i].dueDate <  new Date().toLocaleDateString("en-CA")){%>
@@ -24,9 +24,9 @@
     </div>
 
     <div>
-        <h5>Due Today</h5> <span id="Due Today"
+        <h5>Due Today <span
         class="bg-gray-100 text-gray-800 text-sm font-small mr-2 px-2.5 py-0.5 rounded dark:bg-gray-200 dark:text-gray-900 justify-center items-center items">1
-    </span>
+    </span> </h5>
         <ul class="list-none">
             <% for( var i=0;i< allTodos.length;i++){%>
                <% if(allTodos[i].dueDate === new Date().toLocaleDateString("en-CA")){%>
@@ -48,9 +48,9 @@
         </div>
 
         <div>
-            <h5>Due Later</h5> <span id="Due Later"
+            <h5>Due Later <span
             class="bg-gray-100 text-gray-800 text-sm font-small mr-2 px-2.5 py-0.5 rounded dark:bg-gray-200 dark:text-gray-900 justify-center items-center items">1
-        </span>
+        </span> </h5>
             <ul class="list-none">
                 <% for( var i=0;i< allTodos.length;i++){%>
                    <% if(allTodos[i].dueDate > new Date().toLocaleDateString("en-CA")){%>
