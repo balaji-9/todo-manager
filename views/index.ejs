@@ -14,14 +14,14 @@
   <div class="grid grid-cols-6">
     <div class="col-start-3 col-span-2">
       <%- include('header.ejs') %>
-        <form action="">
+        <form action="/todos" method="post">
           <div class="flex gap-2 py-4">
             <div class="flex-auto">
-              <input type="text" placeholder="What's Next?"
+              <input type="text" name="title" placeholder="What's Next?"
                 class="border border-gray-300 text-gray-900 rounded text-sm w-full p-2" required />
             </div>
             <div class="flex-auto">
-              <input type="date" class="border border-gray-300 text-gray-900 rounded text-sm w-full leading-4 p-2" />
+              <input type="date" name="dueDate" class="border border-gray-300 text-gray-900 rounded text-sm w-full leading-4 p-2" />
             </div>
             <div class="flex-none">
               <button type="submit" class="bg-green-600 rounded p-2 text-white font-bold py-1.5 mr-2 mb-2 px-4">
@@ -30,16 +30,10 @@
             </div>
           </div>
         </form> 
-        <div class="mt-2">
-          <h5 style="display:inline"><id>Overdue</h5>
-          <span style="text-align:right" id='count-overdue' class="bg-gray-200 text-black px-3 py-1 rounded font-medium mr-2 mb-2">2</span>
-          <%- include('todo.ejs') %>
-          <h5 style="display:inline">Due Today</h5>
-          <span style="text-align:right" id='count-due-today' class="bg-gray-200 text-black px-3 py-1 rounded font-medium mr-2 mb-2">2</span>
-          <%- include('todo.ejs') %>
-          <h5 style="display:inline">Due Later</h5>
-          <span style="text-align:right" id='count-due-later' class="bg-gray-200 text-black px-3 py-1 rounded font-medium mr-2 mb-2">2</span>
-          <%- include('todo.ejs') %>
+        <div>
+          <%- include('todo.ejs', {title:"Overdue" , data:overdue}) %>
+          <%- include('todo.ejs', {title:"Due Today", data:dueToday}) %>
+          <%- include('todo.ejs', {title:"Due Later", data:dueLater}) %>
         </div>
     
         <div class="flex justify-center"><%- include('footer.ejs') %></div>

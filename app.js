@@ -4,32 +4,31 @@ const { Todo } = require("./models");
 const bodyParser = require("body-parser");
 const path = require("path");
 app.use(bodyParser.json());
+app.use(express.urlencoded({extended:false}))
 
 app.set("view engine", "ejs");
 
 app.get("/", async (request, response) => {
-  const allTodos = await Todo.getTodo();
-  if (request.accepts("html")) {
-    response.render("index", { allTodos });
-  } else {
-    response.json({ allTodos });
-  }
+  const overdue = await Todo.overdue();
+  const dueToday = await Todo.dueToday();
+  const dueLater = await Todo.dueLater();
+    response.render("index", {title: "Todo application",overdue,dueToday,dueLater });
+
 });
 
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/todos", async (request, response) => {
-  const todoItems = await Todo.getTodo();
-  response.json(todoItems);
+    console.log("Todo List")
 });
 
 app.post("/todos", async (request, response) => {
   try {
-    const todo = await Todo.addTodo({
+    await Todo.addTodo({
       title: request.body.title,
       dueDate: request.body.dueDate,
     });
-    return response.json(todo);
+    return response.redirect("/");
   } catch (error) {
     console.error(error);
     return response.status(422).json(error);
