@@ -8,7 +8,7 @@ const cookieParser = require("cookie-parser");
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser("some secret string"));
-app.use(csrf("secret key thirty two characters", ["POST", "PUT", "DELETE"] ));
+app.use(csrf("secret key thirty two characters", ["POST", "PUT", "DELETE"]));
 
 app.set("view engine", "ejs");
 
@@ -16,12 +16,14 @@ app.get("/", async (request, response) => {
   const overdue = await Todo.overdue();
   const dueToday = await Todo.dueToday();
   const dueLater = await Todo.dueLater();
+  const completedItems = await Todo.completedTodos();
   if (request.accepts("html")) {
     response.render("index", {
       title: "Todo application",
       overdue,
       dueToday,
       dueLater,
+      completedItems,
       csrfToken: request.csrfToken(),
     });
   } else {
@@ -35,7 +37,7 @@ app.get("/", async (request, response) => {
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/todos", async (request, response) => {
+app.get("/todos", async () => {
   console.log("Todo List");
 });
 

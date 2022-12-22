@@ -58,7 +58,7 @@
                 class="border border-gray-300 text-gray-900 rounded text-sm w-full p-2" required />
             </div>
             <div class="flex-auto">
-              <input type="date" name="dueDate" class="border border-gray-300 text-gray-900 rounded text-sm w-full leading-4 p-2" />
+              <input type="date" name="dueDate" class="border border-gray-300 text-gray-900 rounded text-sm w-full leading-4 p-2" required />
             </div>
             <div class="flex-none">
               <button type="submit" class="bg-green-600 rounded p-2 text-white font-bold py-1.5 mr-2 mb-2 px-4">
@@ -71,6 +71,7 @@
           <%- include('todo.ejs', {title:"Overdue" , data:overdue}) %>
           <%- include('todo.ejs', {title:"Due Today", data:dueToday}) %>
           <%- include('todo.ejs', {title:"Due Later", data:dueLater}) %>
+          <%- include('todo.ejs', {title:"Completed Items", data:completedItems}) %>
         </div>
     
         <div class="flex justify-center"><%- include('footer.ejs') %></div>
