@@ -1,5 +1,6 @@
 "use strict";
 const { Model, Op } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
     /**
@@ -10,57 +11,64 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-
     static addTodo({ title, dueDate }) {
-      return this.create({ title: title, dueDate, dueDate, completed: false });
+      return this.create({ title: title, dueDate: dueDate, completed: false });
     }
-
     markAsCompleted() {
       return this.update({ completed: true });
     }
 
-    static getTodo() {
+    static getTodos() {
       return this.findAll();
     }
-
-    static async overdue() {
+    static overdue() {
       return this.findAll({
         where: {
-          dueDate: { [Op.lt]: new Date().toLocaleDateString("en-CA") },
+          dueDate: {
+            [Op.lt]: new Date().toLocaleDateString("en-CA"),
+          },
+          completed: false,
         },
       });
     }
-
-    static async dueToday() {
+    static dueToday() {
       return this.findAll({
         where: {
-          dueDate: { [Op.eq]: new Date().toLocaleDateString("en-CA") },
+          dueDate: {
+            [Op.eq]: new Date().toLocaleDateString("en-CA"),
+          },
+          completed: false,
         },
       });
     }
-
-    static async dueLater() {
+    static dueLater() {
       return this.findAll({
         where: {
-          dueDate: { [Op.gt]: new Date().toLocaleDateString("en-CA") },
+          dueDate: {
+            [Op.gt]: new Date().toLocaleDateString("en-CA"),
+          },
+          completed: false,
         },
       });
     }
-
-    static async remove(id) {
-      return this.destroy({
-        where: { id: id },
-      });
-    }
-
-    static async completedTodos() {
+    static completedTodos() {
       return this.findAll({
         where: {
           completed: true,
         },
       });
     }
+    static async remove(id) {
+      return this.destroy({
+        where: { id: id },
+      });
+    }
+
+    setCompletionStatus(bool) {
+      return this.update({ completed: bool });
+    }
   }
+
   Todo.init(
     {
       title: DataTypes.STRING,

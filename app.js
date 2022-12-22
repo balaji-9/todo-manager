@@ -31,17 +31,19 @@ app.get("/", async (request, response) => {
       overdue,
       dueToday,
       dueLater,
+      completedItems,
     });
   }
 });
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/todos", async () => {
-  console.log("Todo List");
+app.get("/todos", async (request) => {
+  console.log("Todo List",request.body);
 });
 
 app.post("/todos", async (request, response) => {
+  console.log("creating a new Todo");
   try {
     await Todo.addTodo({
       title: request.body.title,
@@ -54,11 +56,11 @@ app.post("/todos", async (request, response) => {
   }
 });
 
-app.put("/todos/:id/markAsCompleted", async (request, response) => {
+app.put("/todos/:id", async (request, response) => {
   console.log("We have to update a todo with ID:", request.params.id);
   const todo = await Todo.findByPk(request.params.id);
   try {
-    const updatedTodo = await todo.markAsCompleted();
+    const updatedTodo = await todo.setCompletionStatus(request.body.completed);
     return response.json(updatedTodo);
   } catch (error) {
     console.error(error);

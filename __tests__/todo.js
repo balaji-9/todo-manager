@@ -31,11 +31,11 @@ describe("Todo test suite", () => {
     });
     expect(response.statusCode).toBe(302);
   });
-  test("Mark a todo as complete", async () => {
+  test("Updating a Todo", async () => {
     let res = await agent.get("/");
     let csrfToken = extractCsrfToken(res);
     await agent.post("/todos").send({
-      title: "Buy milk",
+      title: "Buy Games",
       dueDate: new Date().toISOString(),
       completed: false,
       _csrf: csrfToken,
@@ -46,17 +46,31 @@ describe("Todo test suite", () => {
     const parsedGroupedResponse = JSON.parse(groupedTodosResponse.text);
     const dueTodayCount = parsedGroupedResponse.dueToday.length;
     const latestTodo = parsedGroupedResponse.dueToday[dueTodayCount - 1];
-
+    expect(latestTodo.completed).toBe(false);
+    let status = latestTodo.completed ? false : true;
     res = await agent.get("/");
     csrfToken = extractCsrfToken(res);
 
-    const markCompletedResponse = await agent
-      .put(`/todos/${latestTodo.id}/markAsCompleted`)
+    const UpdateTodoAsCompleted = await agent
+      .put(`/todos/${latestTodo.id}`)
       .send({
         _csrf: csrfToken,
+        completed: status,
       });
-    const parsedUpdateResponse = JSON.parse(markCompletedResponse.text);
+    let parsedUpdateResponse = JSON.parse(UpdateTodoAsCompleted.text);
     expect(parsedUpdateResponse.completed).toBe(true);
+    status = latestTodo.completed ? true : false;
+    res = await agent.get("/");
+    csrfToken = extractCsrfToken(res);
+
+    const UpdateTodoAsIncomplete = await agent
+      .put(`/todos/${latestTodo.id}`)
+      .send({
+        _csrf: csrfToken,
+        completed: status,
+      });
+    parsedUpdateResponse = JSON.parse(UpdateTodoAsIncomplete.text);
+    expect(parsedUpdateResponse.completed).toBe(false);
   });
 
   test("Deleting a Todo", async () => {
@@ -66,6 +80,7 @@ describe("Todo test suite", () => {
       title: "Prepare Poster",
       dueDate: new Date().toISOString(),
       completed: false,
+      _csrf: csrfToken,
     });
     const groupedTodosResponse = await agent
       .get("/")
