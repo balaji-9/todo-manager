@@ -50,7 +50,7 @@ app.put("/todos/:id/markAsCompleted", async (request, response) => {
 app.delete("/todos/:id", async (request, response) => {
   console.log("Delete a todo by ID:", request.params.id);
   try {
-    const deletedTodo = await Todo.deleteTodo(request.params.id);
+    const deletedTodo = await Todo.remove(request.params.id);
     return response.send(deletedTodo ? true : false);
   } catch (error) {
     console.error(error);

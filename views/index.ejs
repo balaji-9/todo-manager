@@ -8,6 +8,33 @@
   <title>Document</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="css/styles.css" />
+  <script>
+    function updateTodo(id){
+      fetch(`/todos/${id}/markAsCompleted`,{
+        method: "put",
+        headers: {"Content-Type": "application/json"}
+      })
+      .then((res) => {
+        if(res.ok) {
+          window.location.reload();
+        }
+      })
+      .catch((err) => console.err(err))
+    }
+
+    function deleteTodo(id){
+      fetch(`/todos/${id}`,{
+        method: "delete",
+        headers: {"Content-Type": "application/json"}
+      })
+      .then((res) => {
+        if(res.ok) {
+          window.location.reload();
+        }
+      })
+      .catch((err) => console.err(err))
+    }
+  </script>
 </head>
 
 <body>

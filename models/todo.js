@@ -1,5 +1,5 @@
 "use strict";
-const { Model,Op } = require("sequelize");
+const { Model, Op } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
     /**
@@ -23,32 +23,31 @@ module.exports = (sequelize, DataTypes) => {
       return this.findAll();
     }
 
-    static overdue() {
+    static async overdue() {
       return this.findAll({
         where: {
           dueDate: { [Op.lt]: new Date().toLocaleDateString("en-CA") },
-          completed: false,
-        },
-      });
-    }
-    static dueToday() {
-      return this.findAll({
-        where: {
-          dueDate: { [Op.eq]: new Date().toLocaleDateString("en-CA") },
-          completed: false,
-        },
-      });
-    }
-    static dueLater() {
-      return this.findAll({
-        where: {
-          dueDate: { [Op.gt]: new Date().toLocaleDateString("en-CA") },
-          completed: false,
         },
       });
     }
 
-    static deleteTodo(id) {
+    static async dueToday() {
+      return this.findAll({
+        where: {
+          dueDate: { [Op.eq]: new Date().toLocaleDateString("en-CA") },
+        },
+      });
+    }
+
+    static async dueLater() {
+      return this.findAll({
+        where: {
+          dueDate: { [Op.gt]: new Date().toLocaleDateString("en-CA") },
+        },
+      });
+    }
+
+    static async remove(id) {
       return this.destroy({
         where: { id: id },
       });
