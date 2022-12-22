@@ -30,14 +30,20 @@
             </div>
           </div>
         </form> 
+        <div class="mt-2">
+          <h5 style="display:inline"><id>Overdue</h5>
+          <span style="text-align:right" id='count-overdue' class="bg-gray-200 text-black px-3 py-1 rounded font-medium mr-2 mb-2">2</span>
           <%- include('todo.ejs') %>
-   
-          <footer>
-            <section>
-              <%- include('footer.ejs') %>
-            </section>
-          </footer>
-          
+          <h5 style="display:inline">Due Today</h5>
+          <span style="text-align:right" id='count-due-today' class="bg-gray-200 text-black px-3 py-1 rounded font-medium mr-2 mb-2">2</span>
+          <%- include('todo.ejs') %>
+          <h5 style="display:inline">Due Later</h5>
+          <span style="text-align:right" id='count-due-later' class="bg-gray-200 text-black px-3 py-1 rounded font-medium mr-2 mb-2">2</span>
+          <%- include('todo.ejs') %>
+        </div>
+    
+        <div class="flex justify-center"><%- include('footer.ejs') %></div>
+      </body>
     </div>
   </div>
   
